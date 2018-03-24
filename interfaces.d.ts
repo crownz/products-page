@@ -1,11 +1,11 @@
 interface Category {
   id: string;
-  name: string;
+  title: string;
 }
 
 interface Product {
   id: string;
-  name: string;
+  title: string;
   description: string;
-  categories: Category[];
+  categoryIds: string[];
 }

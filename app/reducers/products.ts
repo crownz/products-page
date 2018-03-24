@@ -3,6 +3,10 @@ import {
   GetCategoriesLoading,
   GetCategoriesDone,
   GetCategoriesError,
+  GetProductsDone,
+  GetProductsError,
+  GetProductsLoading,
+  SetFilteredProducts,
 } from '../actions/products';
 
 export interface ProductsState {
@@ -21,7 +25,14 @@ const initialState: ProductsState = {
   fetchingProducts: false,
 };
 
-type Action = GetCategoriesLoading | GetCategoriesDone | GetCategoriesError;
+type Action =
+  | GetCategoriesLoading
+  | GetCategoriesDone
+  | GetCategoriesError
+  | GetProductsLoading
+  | GetProductsError
+  | GetProductsDone
+  | SetFilteredProducts;
 
 const products = (state: ProductsState = initialState, action: Action) => {
   switch (action.type) {
@@ -41,6 +52,28 @@ const products = (state: ProductsState = initialState, action: Action) => {
         ...state,
         fetchingCategories: false,
         categories: action.categories,
+      };
+    case ProductsAction.GET_PRODUCTS_LOADING:
+      return {
+        ...state,
+        fetchingProducts: true,
+      };
+    case ProductsAction.GET_PRODUCTS_ERROR:
+      return {
+        ...state,
+        fetchingProducts: false,
+        products: [],
+      };
+    case ProductsAction.GET_PRODUCTS_DONE:
+      return {
+        ...state,
+        fetchingProducts: false,
+        products: action.products,
+      };
+    case ProductsAction.SET_FILTERED_PRODUCTS:
+      return {
+        ...state,
+        activeProducts: action.activeProducts,
       };
     default:
       return state;

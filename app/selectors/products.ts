@@ -3,12 +3,17 @@ import { ReduxState } from '../reducers';
 
 const productsStateSelector = (state: ReduxState) => state.products;
 
-const categoriesSelector = createSelector(
+export const categoriesSelector = createSelector(
   productsStateSelector,
   productsState => productsState.categories
 );
 
-const productsSelector = createSelector(
+export const activeProductsSelector = createSelector(
+  productsStateSelector,
+  productsState => productsState.activeProducts
+);
+
+export const productsSelector = createSelector(
   productsStateSelector,
   productsState => productsState.products
 );

@@ -2,67 +2,67 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { ReduxState } from '../../reducers';
-import { getCategories } from '../../actions/products';
+import { getCategories, filterActiveProducts } from '../../actions/products';
 
 import * as Styles from './App.css';
 
-interface StateProps {
+interface AppProps {
   categories: Category[];
+  activeProducts: Product[];
+  filterActiveProducts: typeof filterActiveProducts;
 }
 
-interface DispatchProps {
-  getCategories: typeof getCategories;
-}
-
-type Props = StateProps & DispatchProps;
-
-interface State {
+interface AppState {
   activeCategoryId: string;
 }
 
-class App extends React.Component<Props, State> {
-  state: State = {
-    activeCategoryId: null,
-  };
-
-  componentDidMount() {
-    this.props.getCategories();
+class App extends React.Component<AppProps, AppState> {
+  constructor(props: AppProps) {
+    super(props);
+    const activeCategoryId =
+      (props.categories && props.categories.length > 0 && props.categories[0].id) || null;
+    this.state = { activeCategoryId };
   }
 
-  setActiveCategory = (categoryId: string) => this.setState({ activeCategoryId: categoryId });
+  componentDidMount() {
+    this.props.filterActiveProducts(this.state.activeCategoryId);
+  }
+
+  setActiveCategory = (categoryId: string) => {
+    this.setState({ activeCategoryId: categoryId }, () => {
+      this.props.filterActiveProducts(categoryId);
+    });
+  };
 
   render() {
-    const { categories } = this.props;
+    const { categories, activeProducts } = this.props;
     const { activeCategoryId } = this.state;
     return (
       <div data-hook="app-container" className={Styles.container}>
-        {categories && (
-          <div className={Styles.categories}>
-            <div className={Styles.categoriesTitle}>Store Cupboard</div>
-            {categories.map(category => (
-              <div
-                className={`${Styles.category} ${
-                  activeCategoryId === category.id ? Styles.active : ''
-                }`}
-                onClick={() => this.setActiveCategory(category.id)}
-                key={category.id}
-              >
-                {category.title}
-              </div>
-            ))}
-          </div>
-        )}
+        <div className={Styles.categories}>
+          <div className={Styles.categoriesTitle}>Store Cupboard</div>
+          {categories.map(category => (
+            <div
+              className={`${Styles.category} ${
+                activeCategoryId === category.id ? Styles.active : ''
+              }`}
+              onClick={() => this.setActiveCategory(category.id)}
+              key={category.id}
+            >
+              {category.title}
+            </div>
+          ))}
+        </div>
+        <div className={Styles.products}>
+          {activeProducts.map(product => (
+            <div className={Styles.product} key={product.id}>
+              {product.title}
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: ReduxState): StateProps => ({
-  categories: state.products.categories,
-});
-
-const mapDispatchToProps: DispatchProps = {
-  getCategories,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
