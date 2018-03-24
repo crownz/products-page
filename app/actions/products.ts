@@ -1,5 +1,6 @@
 import { PRODUCT_CATEGORIES_V2, PRODUCT_LIST_v2 } from '../constants/endpoints';
 import { productsSelector } from '../selectors/products';
+import * as ProductsAPI from '../services/productsAPI';
 
 export enum ProductsAction {
   GET_CATEGORIES_LOADING = 'GET_CATEGORIES_LOADING',
@@ -46,10 +47,7 @@ export const getCategoriesDone = (categories: Category[]): GetCategoriesDone => 
 export const getCategories = () => {
   return dispatch => {
     dispatch(getCategoriesLoading());
-    fetch(PRODUCT_CATEGORIES_V2, {
-      method: 'GET',
-    })
-      .then(response => response.json())
+    return ProductsAPI.getCategories()
       .then(response => {
         const categories: Category[] = response.data
           .filter(category => !category.hidden)
@@ -57,7 +55,7 @@ export const getCategories = () => {
             id: category.id,
             title: category.title,
           }));
-        dispatch(getCategoriesDone(categories));
+        return dispatch(getCategoriesDone(categories));
       })
       .catch(err => dispatch(getCategoriesError()));
   };
@@ -98,10 +96,7 @@ export const getProductsDone = (products: Product[]): GetProductsDone => {
 export const getProducts = () => {
   return dispatch => {
     dispatch(getProductsLoading());
-    fetch(PRODUCT_LIST_v2, {
-      method: 'GET',
-    })
-      .then(response => response.json())
+    return ProductsAPI.getProducts()
       .then(response => {
         const products: Product[] = response.data.map(product => ({
           id: product.id,
@@ -109,7 +104,7 @@ export const getProducts = () => {
           description: product.description,
           categoryIds: product.categories.map(category => category.id),
         }));
-        dispatch(getProductsDone(products));
+        return dispatch(getProductsDone(products));
       })
       .catch(err => dispatch(getProductsError()));
   };
