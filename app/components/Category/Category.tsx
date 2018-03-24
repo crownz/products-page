@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as Styles from './Category.css';
 
-interface Props {
+export interface Props {
   title: string;
   id: string;
   isActive: boolean;
@@ -14,6 +14,7 @@ const Category = ({ title, id, isActive, setActive }: Props) => {
     <div
       className={`${Styles.category} ${isActive ? Styles.active : ''}`}
       onClick={() => setActive(id)}
+      data-hook={isActive ? 'active-category' : 'category'}
     >
       {title}
     </div>

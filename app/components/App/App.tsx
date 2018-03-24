@@ -19,17 +19,17 @@ interface RouterProps {
 interface OwnProps {
   categories: Category[];
   activeProducts: Product[];
-  filterActiveProducts: typeof filterActiveProducts;
+  filterActiveProducts: (category: string, fitler: string) => void;
   activeCategoryId: string;
 }
 
-type AppProps = OwnProps & RouterProps;
+export type AppProps = OwnProps & RouterProps;
 
 interface State {
   searchString: string;
 }
 
-class App extends React.Component<AppProps, State> {
+export class App extends React.Component<AppProps, State> {
   state: State = {
     searchString: '',
   };
@@ -79,16 +79,19 @@ class App extends React.Component<AppProps, State> {
     return (
       <div data-hook="app-container">
         <div className={Styles.categories}>
-          <div className={Styles.categoriesTitle}>Store Cupboard</div>
-          {this.renderCategories()}
+          <div className={Styles.categoriesTitle} data-hook="categories-title">
+            Store Cupboard
+          </div>
+          <div data-hook="categories-container">{this.renderCategories()}</div>
         </div>
         <div className={Styles.products}>
           <input
+            data-hook="filter-input"
             className={Styles.search}
             value={this.state.searchString}
             onChange={e => this.filterProducts(e.target.value)}
           />
-          {this.renderProducts()}
+          <div data-hook="products-container">{this.renderProducts()}</div>
         </div>
       </div>
     );
