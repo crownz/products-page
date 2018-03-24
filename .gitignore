@@ -1,0 +1,9 @@
+.idea
+.idea/*
+node_modules
+*.log
+build
+dist
+npm-debug.log
+.DS_Store
+.cache

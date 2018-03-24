@@ -1,0 +1,48 @@
+{
+  "name": "empty",
+  "author": {
+    "name": "crownz"
+  },
+  "license": "MIT",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "parcel app/index.html",
+    "build": "parcel build app/index.html --public-url ./",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "setupFiles": ["<rootDir>/config/test-shim.js", "<rootDir>/config/test-setup.js"],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/config/test-preprocessor.js"
+    },
+    "testMatch": ["**/*.(test|spec).(ts|tsx|js)"]
+  },
+  "dependencies": {
+    "react": "16.2.0",
+    "react-dom": "16.2.0",
+    "@types/react": "16.0.40",
+    "@types/react-dom": "16.0.4",
+    "autoprefixer": "8.1.0",
+    "postcss-modules": "1.1.0",
+    "precss": "3.1.2"
+  },
+  "devDependencies": {
+    "babel-preset-env": "1.6.1",
+    "parcel-bundler": "1.6.2",
+    "@types/enzyme": "3.1.9",
+    "@types/jest": "22.2.2",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "jest": "22.4.3",
+    "prettier": "1.11.1",
+    "react-test-renderer": "16.2.0",
+    "ts-jest": "22.4.2",
+    "tslint": "5.9.1",
+    "tslint-config-airbnb": "5.7.0",
+    "tslint-config-prettier": "1.10.0",
+    "tslint-react": "3.5.1",
+    "typescript": "2.7.2"
+  }
+}
