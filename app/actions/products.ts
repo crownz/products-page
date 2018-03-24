@@ -45,7 +45,15 @@ export const getCategories = () => {
       method: 'GET',
     })
       .then(response => response.json())
-      .then(data => dispatch(getCategoriesDone(data)))
+      .then(response => {
+        const categories: Category[] = response.data
+          .filter(category => !category.hidden)
+          .map(category => ({
+            id: category.id,
+            title: category.title,
+          }));
+        dispatch(getCategoriesDone(categories));
+      })
       .catch(err => dispatch(getCategoriesError()));
   };
 };
