@@ -1,0 +1,17 @@
+.container {
+  padding: 4px 0;
+}
+
+.title {
+  cursor: pointer;
+  font-size: 12px;
+  &.active {
+    font-weight: bold;
+    padding-bottom: 4px;
+  }
+}
+
+.description {
+  font-size: 11px;
+  padding-bottom: 15px;
+}
