@@ -78,11 +78,11 @@ export class App extends React.Component<AppProps, State> {
   render() {
     return (
       <div data-hook="app-container">
-        <div className={Styles.categories}>
+        <div className={Styles.categories} data-hook="categories-container">
           <div className={Styles.categoriesTitle} data-hook="categories-title">
             Store Cupboard
           </div>
-          <div data-hook="categories-container">{this.renderCategories()}</div>
+          {this.renderCategories()}
         </div>
         <div className={Styles.products}>
           <input

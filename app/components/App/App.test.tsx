@@ -21,7 +21,7 @@ describe('App component', () => {
         .element('categories-container')
         .childrent()
         .count()
-    ).toEqual(0);
+    ).toEqual(1);
   });
 
   it('should render 1 category', () => {
@@ -31,7 +31,7 @@ describe('App component', () => {
         .element('categories-container')
         .childrent()
         .count()
-    ).toEqual(1);
+    ).toEqual(2);
   });
 
   it('should render filter input', () => {
