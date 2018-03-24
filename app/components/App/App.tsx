@@ -1,42 +1,47 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { ReduxState } from '../../reducers';
 import { getCategories, filterActiveProducts } from '../../actions/products';
 
 import * as Styles from './App.css';
 
-interface AppProps {
+interface RouterProps {
+  history: {
+    push: (url: string) => void;
+  };
+}
+
+interface OwnProps {
   categories: Category[];
   activeProducts: Product[];
   filterActiveProducts: typeof filterActiveProducts;
-}
-
-interface AppState {
   activeCategoryId: string;
 }
 
-class App extends React.Component<AppProps, AppState> {
-  constructor(props: AppProps) {
-    super(props);
-    const activeCategoryId =
-      (props.categories && props.categories.length > 0 && props.categories[0].id) || null;
-    this.state = { activeCategoryId };
-  }
+type AppProps = OwnProps & RouterProps;
 
+class App extends React.Component<AppProps> {
   componentDidMount() {
-    this.props.filterActiveProducts(this.state.activeCategoryId);
+    if (this.props.activeCategoryId) {
+      this.props.filterActiveProducts(this.props.activeCategoryId);
+    } else {
+      const firstCategoryId = this.props.categories[0].id;
+      this.props.history.push(`/products/${firstCategoryId}`);
+    }
   }
 
-  setActiveCategory = (categoryId: string) => {
-    this.setState({ activeCategoryId: categoryId }, () => {
-      this.props.filterActiveProducts(categoryId);
-    });
-  };
+  componentDidUpdate(oldProps: AppProps) {
+    if (oldProps.activeCategoryId !== this.props.activeCategoryId) {
+      this.props.filterActiveProducts(this.props.activeCategoryId);
+    }
+  }
+
+  setActiveCategory = (categoryId: string) => this.props.history.push(`/products/${categoryId}`);
 
   render() {
-    const { categories, activeProducts } = this.props;
-    const { activeCategoryId } = this.state;
+    const { categories, activeProducts, activeCategoryId } = this.props;
     return (
       <div data-hook="app-container" className={Styles.container}>
         <div className={Styles.categories}>
@@ -65,4 +70,4 @@ class App extends React.Component<AppProps, AppState> {
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -12,21 +12,12 @@
     "test:watch": "jest --watch"
   },
   "jest": {
-    "setupFiles": [
-      "<rootDir>/config/test-shim.js",
-      "<rootDir>/config/test-setup.js"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "setupFiles": ["<rootDir>/config/test-shim.js", "<rootDir>/config/test-setup.js"],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/config/test-preprocessor.js"
     },
-    "testMatch": [
-      "**/*.(test|spec).(ts|tsx|js)"
-    ]
+    "testMatch": ["**/*.(test|spec).(ts|tsx|js)"]
   },
   "dependencies": {
     "@types/react": "16.0.40",
@@ -34,16 +25,17 @@
     "@types/react-redux": "5.0.15",
     "@types/redux": "3.6.0",
     "@types/redux-thunk": "2.1.0",
-    "@types/reselect": "^2.2.0",
+    "@types/reselect": "2.2.0",
     "autoprefixer": "8.1.0",
     "postcss-modules": "1.1.0",
     "precss": "3.1.2",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.7",
+    "react-router-dom": "4.2.2",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "3.0.1"
   },
   "devDependencies": {
     "babel-preset-env": "1.6.1",

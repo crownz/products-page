@@ -25,7 +25,15 @@ interface DispatchProps {
   filterActiveProducts: typeof filterActiveProducts;
 }
 
-type Props = StateProps & DispatchProps;
+interface RouterProps {
+  match: {
+    params: {
+      categoryId: string;
+    };
+  };
+}
+
+type Props = StateProps & DispatchProps & RouterProps;
 
 class AppContainer extends React.Component<Props> {
   componentDidMount() {
@@ -41,6 +49,7 @@ class AppContainer extends React.Component<Props> {
         categories={this.props.categories}
         activeProducts={this.props.activeProducts}
         filterActiveProducts={this.props.filterActiveProducts}
+        activeCategoryId={this.props.match.params.categoryId}
       />
     );
   }
