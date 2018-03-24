@@ -1,12 +1,18 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as Styles from './index.css';
+import { Provider } from 'react-redux';
+
+import { configureStore } from './services/store';
+
+import './index.css';
 
 import App from './components/App';
 
+const store = configureStore();
+
 ReactDOM.render(
-  <div className={Styles.container}>
+  <Provider store={store}>
     <App />
-  </div>,
+  </Provider>,
   document.getElementById('root')
 );
