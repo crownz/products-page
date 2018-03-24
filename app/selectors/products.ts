@@ -18,12 +18,12 @@ export const productsSelector = createSelector(
   productsState => productsState.products
 );
 
-const isLoadingCategoriesSelector = createSelector(
+export const isLoadingCategoriesSelector = createSelector(
   productsStateSelector,
   productsState => productsState.fetchingCategories
 );
 
-const isLoadingProductsSelector = createSelector(
+export const isLoadingProductsSelector = createSelector(
   productsStateSelector,
   productsState => productsState.fetchingProducts
 );

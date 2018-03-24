@@ -127,10 +127,17 @@ export const setFilteredProducts = (activeProducts: Product[]): SetFilteredProdu
   };
 };
 
-export const filterActiveProducts = (category: string) => {
+export const filterActiveProducts = (category: string, searchString: string) => {
   return (dispatch, getState) => {
     const products = productsSelector(getState());
-    const filtered = products.filter(product => product.categoryIds.includes(category));
+    let filtered = products.filter(product => product.categoryIds.includes(category));
+    if (searchString) {
+      filtered = filtered.filter(
+        product =>
+          product.title.toLowerCase().includes(searchString.toLowerCase()) ||
+          product.description.toLowerCase().includes(searchString.toLowerCase())
+      );
+    }
     dispatch(setFilteredProducts(filtered));
   };
 };

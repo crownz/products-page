@@ -25,23 +25,37 @@ interface OwnProps {
 
 type AppProps = OwnProps & RouterProps;
 
-class App extends React.Component<AppProps> {
+interface State {
+  searchString: string;
+}
+
+class App extends React.Component<AppProps, State> {
+  state: State = {
+    searchString: '',
+  };
+
   componentDidMount() {
     if (this.props.activeCategoryId) {
-      this.props.filterActiveProducts(this.props.activeCategoryId);
+      this.props.filterActiveProducts(this.props.activeCategoryId, this.state.searchString);
     } else {
-      const firstCategoryId = this.props.categories[0].id;
+      const firstCategoryId =
+        this.props.categories && this.props.categories.length > 0 && this.props.categories[0].id;
       this.props.history.push(`/products/${firstCategoryId}`);
     }
   }
 
   componentDidUpdate(oldProps: AppProps) {
     if (oldProps.activeCategoryId !== this.props.activeCategoryId) {
-      this.props.filterActiveProducts(this.props.activeCategoryId);
+      this.props.filterActiveProducts(this.props.activeCategoryId, this.state.searchString);
     }
   }
 
   setActiveCategory = (categoryId: string) => this.props.history.push(`/products/${categoryId}`);
+  filterProducts = (searchString: string) => {
+    this.setState({ searchString }, () => {
+      this.props.filterActiveProducts(this.props.activeCategoryId, searchString);
+    });
+  };
 
   renderProducts = () => {
     return this.props.activeProducts.map(product => (
@@ -63,12 +77,19 @@ class App extends React.Component<AppProps> {
 
   render() {
     return (
-      <div data-hook="app-container" className={Styles.container}>
+      <div data-hook="app-container">
         <div className={Styles.categories}>
           <div className={Styles.categoriesTitle}>Store Cupboard</div>
           {this.renderCategories()}
         </div>
-        <div className={Styles.products}>{this.renderProducts()}</div>
+        <div className={Styles.products}>
+          <input
+            className={Styles.search}
+            value={this.state.searchString}
+            onChange={e => this.filterProducts(e.target.value)}
+          />
+          {this.renderProducts()}
+        </div>
       </div>
     );
   }

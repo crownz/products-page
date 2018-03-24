@@ -1,6 +1,6 @@
 .container {
   width: 100%;
-  padding: 100px;
+  padding: 80px;
   display: flex;
   flex-direction: column;
 }
@@ -12,5 +12,19 @@
 
 .categoriesTitle {
   font-size: 14px;
-  padding-right: 15px;
+  padding-right: 30px;
+}
+
+.search {
+  height: 20px;
+  font-size: 12px;
+  padding: 4px 10px;
+  margin: 10px 0;
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 3px;
+}
+
+.products {
+  max-width: 300px;
 }

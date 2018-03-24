@@ -42,15 +42,19 @@ class AppContainer extends React.Component<Props> {
   }
 
   render() {
-    return this.props.isLoading ? (
-      <div>Loading...</div>
-    ) : (
-      <App
-        categories={this.props.categories}
-        activeProducts={this.props.activeProducts}
-        filterActiveProducts={this.props.filterActiveProducts}
-        activeCategoryId={this.props.match.params.categoryId}
-      />
+    return (
+      <div className={Styles.container}>
+        {this.props.isLoading ? (
+          <div>Loading...</div>
+        ) : (
+          <App
+            categories={this.props.categories}
+            activeProducts={this.props.activeProducts}
+            filterActiveProducts={this.props.filterActiveProducts}
+            activeCategoryId={this.props.match.params.categoryId}
+          />
+        )}
+      </div>
     );
   }
 }
